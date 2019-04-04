@@ -3,12 +3,20 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+
+import { GolfComponent } from './golf/golf.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GolfComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    MatProgressSpinnerModule, 
+    MatButtonModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]

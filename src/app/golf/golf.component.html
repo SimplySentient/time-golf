@@ -1,0 +1,48 @@
+<div class="contents">
+
+  <h1>Time Golf</h1>
+
+  <div class="hole-details" *ngIf="showHoleDetails">
+    <div class="hole-number">
+      Hole 1
+    </div>
+
+    <div class="hole-time">
+      1 Minute
+    </div>
+
+    <div class="hole-par">
+      Par 3
+    </div>
+
+    <button mat-raised-button color="primary" (click)="teeOff()">Tee Off</button>
+
+  </div>
+
+  <div *ngIf="showCourse">
+    <div>
+      Putts: {{putts}}
+    </div>
+    <button mat-raised-button color="primary" (click)="putt()">Putt</button>
+  </div>
+
+  <div *ngIf="showPutt">
+    {{timeElapsed}}
+  </div>
+
+  <div *ngIf="showResults">
+    <div>
+      Putts: {{putts}}
+    </div>
+    <div *ngIf="penalty > 0">
+      Penalty: {{penalty}}
+    </div>
+
+    <div class="total-score">
+      Score: {{putts + penalty}}
+    </div>
+
+    <button mat-raised-button color="primary" (click)="nextHole()">Next Hole</button>
+  </div>
+
+</div>
