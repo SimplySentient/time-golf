@@ -1,18 +1,18 @@
 <div class="contents">
 
-  <h1>Time Golf</h1>
+  <h1 class="app-title">Time Golf</h1>
 
-  <div class="hole-details" *ngIf="showHoleDetails">
+  <div *ngIf="showHoleDetails">
     <div class="hole-number">
-      Hole 1
+      Hole {{holeNumber}}
     </div>
 
-    <div class="hole-time">
-      1 Minute
-    </div>
+    <div class="text-block">
+        Par {{holePar}}
+      </div>
 
-    <div class="hole-par">
-      Par 3
+    <div class="text-block">
+        Course Length: {{holeTime}} Seconds
     </div>
 
     <button mat-raised-button color="primary" (click)="teeOff()">Tee Off</button>
@@ -20,26 +20,37 @@
   </div>
 
   <div *ngIf="showCourse">
-    <div>
-      Putts: {{putts}}
+    <mat-progress-spinner class="spinner" [value]="spinnerValue" [color]="spinnerColor"></mat-progress-spinner>
+
+    <button mat-raised-button color="primary" class="text-block" (click)="swing()">Swing</button>
+    <div class="text-block">
+      Strokes: {{strokes}}
     </div>
-    <button mat-raised-button color="primary" (click)="putt()">Putt</button>
+
+    <div class="text-block">
+        Course Length: {{holeTime}} Seconds
+    </div>
+
   </div>
 
-  <div *ngIf="showPutt">
+  <!-- <div *ngIf="showPutt">
     {{timeElapsed}}
-  </div>
+  </div> -->
 
   <div *ngIf="showResults">
-    <div>
-      Putts: {{putts}}
+    <mat-progress-spinner class="spinner" [value]=100></mat-progress-spinner>
+
+    <h1 class="text-block">{{resultsMessage}}</h1>
+
+    <div class="text-block">
+      Strokes: {{strokes}}
     </div>
-    <div *ngIf="penalty > 0">
-      Penalty: {{penalty}}
+    <div class="text-block penalty"*ngIf="penalty > 0">
+      Overtime Penalty: {{penalty}}
     </div>
 
-    <div class="total-score">
-      Score: {{putts + penalty}}
+    <div class="text-block">
+      Score: {{score+penalty}}
     </div>
 
     <button mat-raised-button color="primary" (click)="nextHole()">Next Hole</button>

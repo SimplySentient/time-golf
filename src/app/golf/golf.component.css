@@ -1,6 +1,8 @@
 
 
-
+.app-title {
+    padding-bottom: 50px;
+}
 
 .contents {
     text-align: center;
@@ -10,4 +12,18 @@
     font-size: 36px;
     padding: 50px 0px 20px 0px;
 
+}
+
+.spinner {
+    margin: 0 auto;
+    padding-bottom: 24px;
+
+}
+
+.text-block {
+    margin: 16px;
+}
+
+.penalty {
+    color: red;
 }

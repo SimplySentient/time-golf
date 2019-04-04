@@ -12,21 +12,34 @@ export class GolfComponent {
   showPutt: boolean = false;
   showResults: boolean = false;
 
-  putts: number = 0;
+  strokes: number = 0;
 
   timeElapsed: number = 0; // seconds
 
-  private gameTimer;
-  private puttTimer;
+  spinnerValue: number = 0;
+  spinnerColor: string = "primary"; // switches between accent
 
-  private holeLimit = 20;
+  resultsMessage: string = "";
+
+  holePar: number;
+  holeNumber: number = 0;
+  holeTime: number;
+
+  score: number;
+
+  private gameTimer;
+
   private penalty = 0;
+
+  constructor () {
+    this.nextHole();
+  }
 
   teeOff() {
     this.showHoleDetails = false;
     this.showCourse = true;
-    var self = this;
 
+    var self = this;
     this.gameTimer = setInterval(function() {
       self.timeElapsed++;
       // console.log(self.timeElapsed);
@@ -35,44 +48,57 @@ export class GolfComponent {
   }
 
   endHole() {
+    const GOLF_LINGO = ["Condor","Albatross","Eagle","Birdie","Par","Bogey"]; // score respectively: -4,-3,-2,-1,0,1..+, offset of 4 used 
+
     this.showResults = true;
     this.showCourse = false;
 
-    if (this.timeElapsed > this.holeLimit) {
-      // this.putts = this.putts + 3;
-      this.penalty = 3;
-      console.log('PENALTY FOR OVER');
-    }
+    this.score = this.strokes - this.holePar;
+    var lingoIndex = this.score + 4;
+    if (this.score > 1) {
+      lingoIndex = 5;     
+      if (this.timeElapsed > this.holeTime) {
+        this.penalty = this.timeElapsed - this.holeTime;
+      } 
+    } 
+
+    console.log(lingoIndex, this.strokes, this.holePar);
+    this.resultsMessage = GOLF_LINGO[lingoIndex];
     
     clearInterval(this.gameTimer);
   }
 
-  putt() {
-    this.putts++;
+  swing() {
+    this.strokes++;
+    this.spinnerColor = "primary"; // only changes it the first putt
 
-    if (this.holeLimit - this.timeElapsed <= 3) {
+    if (this.holeTime - this.timeElapsed <= 3) {
       this.endHole();
       return;
     }
-
-    this.showCourse = false;
-    this.showPutt = true;
-
-    var self = this;
-    this.puttTimer = setInterval(function() {
-      self.showPutt = false;
-      self.showCourse = true;
-      console.log('time up!!!!');
-      clearInterval(self.puttTimer);
-    }, 3000);
+    
+    this.spinnerValue = this.timeElapsed / this.holeTime * 100;
 
   }
 
   nextHole() {
-    this.putts = 0;
+    this.strokes = 0;
     this.timeElapsed = 0;
     this.penalty = 0;
     this.showResults = false;
     this.showHoleDetails = true;
+    this.resultsMessage = "";
+    // this.spinnerColor = "accent"; // don't like how this works
+    this.spinnerValue = 100;
+
+    this.holeNumber++;
+    this.holeTime = Math.floor(Math.random() * 150) + 30; // at least 30s up to 3m
+    if (this.holeTime < 80) { 
+      this.holePar = 3;
+    } else if (this.holeTime < 130) {
+      this.holePar = 4;
+    } else {
+      this.holePar = 5;
+    }
   }
 }
