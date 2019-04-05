@@ -89,13 +89,13 @@ export class GolfComponent {
     this.showHoleDetails = true;
     this.resultsMessage = "";
     // this.spinnerColor = "accent"; // don't like how this works
-    this.spinnerValue = 100;
+    this.spinnerValue = 0;
 
     this.holeNumber++;
-    this.holeTime = Math.floor(Math.random() * 150) + 30; // at least 30s up to 3m
-    if (this.holeTime < 80) { 
+    this.holeTime = Math.floor(Math.random() * 120) + 20; // at least 20s up to 3m
+    if (this.holeTime <= 60) { 
       this.holePar = 3;
-    } else if (this.holeTime < 130) {
+    } else if (this.holeTime <= 120) {
       this.holePar = 4;
     } else {
       this.holePar = 5;
