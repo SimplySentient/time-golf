@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class GolfComponent {
 
+  TIMER_INTERVAL = 50;
+
   showHoleDetails: boolean = true;
   showCourse: boolean = false;
   showPutt: boolean = false;
@@ -27,7 +29,13 @@ export class GolfComponent {
 
   score: number;
 
+  swingEnabled = true;
+
   private gameTimer;
+  private swingTimer;
+  private swingShowTime;
+
+  private secondsElapsed;
 
   private penalty = 0;
 
@@ -42,8 +50,11 @@ export class GolfComponent {
     var self = this;
     this.gameTimer = setInterval(function() {
       self.timeElapsed++;
+
+      self.secondsElapsed = self.timeElapsed / (1000 / self.TIMER_INTERVAL);
+      // console.log('seconds elapsed', self.secondsElapsed);
       // console.log(self.timeElapsed);
-    }, 1000);
+    }, 50);
 
   }
 
@@ -52,17 +63,22 @@ export class GolfComponent {
 
     this.showResults = true;
     this.showCourse = false;
+    this.swingEnabled = true;
 
     this.score = this.strokes - this.holePar;
     var lingoIndex = this.score + 4;
     if (this.score > 1) {
       lingoIndex = 5;     
-      if (this.timeElapsed > this.holeTime) {
-        this.penalty = this.timeElapsed - this.holeTime;
-      } 
     } 
 
-    console.log(lingoIndex, this.strokes, this.holePar);
+    this.secondsElapsed = Math.floor(this.secondsElapsed); // trim decimals
+
+    if (this.secondsElapsed > this.holeTime) {
+      this.penalty = this.secondsElapsed - this.holeTime;
+      lingoIndex = 5;
+    } 
+
+    // console.log(lingoIndex, this.strokes, this.holePar);
     this.resultsMessage = GOLF_LINGO[lingoIndex];
     
     clearInterval(this.gameTimer);
@@ -71,13 +87,31 @@ export class GolfComponent {
   swing() {
     this.strokes++;
     this.spinnerColor = "primary"; // only changes it the first putt
-
-    if (this.holeTime - this.timeElapsed <= 3) {
-      this.endHole();
-      return;
-    }
+    this.swingShowTime = 0;
+    var self = this;
+    // this.secondsElapsed = this.timeElapsed / 50;
+    this.swingEnabled = false;
     
-    this.spinnerValue = this.timeElapsed / this.holeTime * 100;
+    this.swingTimer = setInterval(function() {
+      self.spinnerValue = self.secondsElapsed / self.holeTime * 100;
+      self.swingShowTime += 100;
+
+      if (self.holeTime - self.secondsElapsed <= 0) {
+        self.endHole();
+        clearInterval(self.swingTimer);
+      }
+
+      if (self.swingShowTime >= 3000) {
+        clearInterval(self.swingTimer);
+        self.swingEnabled = true;
+        
+        if (self.holeTime - self.secondsElapsed <= 0.5) {
+          self.endHole();
+        }
+      }
+    }, 100);
+    
+    
 
   }
 
@@ -92,7 +126,7 @@ export class GolfComponent {
     this.spinnerValue = 0;
 
     this.holeNumber++;
-    this.holeTime = Math.floor(Math.random() * 120) + 20; // at least 20s up to 3m
+    this.holeTime = Math.floor(Math.random() * 10) + 20; // at least 20s up to 3m
     if (this.holeTime <= 60) { 
       this.holePar = 3;
     } else if (this.holeTime <= 120) {

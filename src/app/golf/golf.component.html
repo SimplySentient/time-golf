@@ -20,9 +20,11 @@
   </div>
 
   <div *ngIf="showCourse">
-    <mat-progress-spinner class="spinner" [value]="spinnerValue" [color]="spinnerColor"></mat-progress-spinner>
+    <mat-progress-spinner class="spinner" [value]="spinnerValue" [color]="spinnerColor">
+    </mat-progress-spinner>
+    <!-- strokeWidth="30px"  -->
 
-    <button mat-raised-button color="primary" class="text-block" (click)="swing()">Swing</button>
+    <button [disabled]="!swingEnabled" mat-raised-button color="primary" class="text-block" (click)="swing()">Swing</button>
     <div class="text-block">
       Strokes: {{strokes}} 
     </div>
