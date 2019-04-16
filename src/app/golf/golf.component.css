@@ -1,29 +1,84 @@
-
-
-.app-title {
-    padding-bottom: 50px;
-}
-
 .contents {
     text-align: center;
 }
 
-.hole-number {
-    font-size: 36px;
-    padding: 50px 0px 20px 0px;
-
+.spinner-main {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .spinner {
-    margin: 0 auto;
-    padding-bottom: 24px;
+    padding-top: 16px;
+}
+
+.spinner-background {
+    position: relative;
+    z-index: 0;
+    /* width: 100px; */
+    left: 50%;
+    transform: translateX(-50%);
+    padding-bottom: 26px;
+}
+
+
+.fullscreen {
+    right: 24px;
+    position: absolute;
+    top: 16px;
+    font-size: 36px;
 
 }
 
+.spinner-penalty {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-bottom: 26px;
+}
+
+.spinner-timer {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 90px;
+    font-weight: 600;
+} 
+
+.swing-button {
+    position: absolute;
+    margin-top: 70px;
+    z-index: 3;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+
+ 
 .text-block {
-    margin: 16px;
+    margin: 6px;
 }
 
 .penalty {
     color: red;
 }
+
+.dot {
+    height: 32px;
+    width: 32px;
+    background-color: #4E4E4E;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 8px;
+  }
+
+  .dot-full {
+    background-color: #ff5722;    
+  }
+
+  .dot-over {
+      background-color: red;
+  }

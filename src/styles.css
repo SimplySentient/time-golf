@@ -3,3 +3,14 @@ body {
     font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     margin: 0px;
   }
+
+
+.mat-progress-spinner.mat-accent circle {
+  stroke: #4E4E4E !important;
+}
+ 
+
+.mat-progress-spinner.mat-warn circle {
+  stroke: red !important;
+}
+ 

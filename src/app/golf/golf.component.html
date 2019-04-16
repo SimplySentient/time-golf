@@ -1,64 +1,48 @@
 <div class="contents">
 
-  <h1 class="app-title">Time Golf</h1>
+  <h1>Time Golf</h1>
 
-  <div *ngIf="showHoleDetails">
-    <div class="hole-number">
-      Hole {{holeNumber}}
-    </div>
+  <i class="material-icons fullscreen" (click)="openFullscreen()">fullscreen</i>
 
-    <div class="text-block">
-        Par {{holePar}}
-      </div>
-
-    <div class="text-block">
-        Course Length: {{holeTime}} Seconds
-    </div>
-
-    <button mat-raised-button color="primary" (click)="teeOff()">Tee Off</button>
-
+  <div class="text-block">
+      Par {{holePar}}
+  </div>
+  <div class="text-block">
+      {{holeTime}} seconds
   </div>
 
-  <div *ngIf="showCourse">
-    <mat-progress-spinner class="spinner" [value]="spinnerValue" [color]="spinnerColor">
+  <div class="spinner">  
+    <div class="spinner-timer" [ngClass]="{'penalty': highlightTime}">{{timerDisplay}}</div>
+
+    <button *ngIf="swingEnabled" mat-fab color="primary" class="swing-button" (click)="swing()">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+
+    <div class="spinner-main"> 
+      <mat-progress-spinner [value]="spinnerValue" color="primary" [mode]="spinnerMode" diameter="200"> 
+        </mat-progress-spinner>
+    </div>
+
+    <mat-progress-spinner *ngIf="spinnerPenalty > 0" class="spinner-penalty" [value]="spinnerPenalty" color="warn" diameter="200">
     </mat-progress-spinner>
-    <!-- strokeWidth="30px"  -->
 
-    <button [disabled]="!swingEnabled" mat-raised-button color="primary" class="text-block" (click)="swing()">Swing</button>
-    <div class="text-block">
-      Strokes: {{strokes}} 
-    </div>
+    <mat-progress-spinner class="spinner-background" [value]="100" color="accent" diameter="200">
+      </mat-progress-spinner>
+  </div>  
 
-    <div class="text-block">
-        Par: {{holePar}}
-    </div>
-    <div class="text-block">
-        Course Length: {{holeTime}} Seconds
-    </div>
 
+  <div>
+    <span *ngFor="let swing of swings">
+      <span [ngClass]="{'dot-full': swing === 1, 'dot-over': swing === 2}" class="dot">
+      </span>
+    </span>
   </div>
-
-  <!-- <div *ngIf="showPutt">
-    {{timeElapsed}}
-  </div> -->
 
   <div *ngIf="showResults">
-    <mat-progress-spinner class="spinner" [value]=100></mat-progress-spinner>
 
     <h1 class="text-block">{{resultsMessage}}</h1>
 
-    <div class="text-block">
-      Strokes: {{strokes}}
-    </div>
-    <div class="text-block penalty"*ngIf="penalty > 0">
-      Overtime Penalty: {{penalty}}
-    </div>
-
-    <div class="text-block">
-      Score: {{score+penalty}}
-    </div>
-
-    <button mat-raised-button color="primary" (click)="nextHole()">Next Hole</button>
+    <button class="text-block" mat-fab color="primary" (click)="nextHole()"><mat-icon>arrow_forward</mat-icon></button>
   </div>
 
 </div>

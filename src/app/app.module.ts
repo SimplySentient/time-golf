@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+
 
 import { GolfComponent } from './golf/golf.component';
 
@@ -17,6 +19,7 @@ import { GolfComponent } from './golf/golf.component';
     BrowserModule,
     MatProgressSpinnerModule, 
     MatButtonModule, 
+    MatIconModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]
